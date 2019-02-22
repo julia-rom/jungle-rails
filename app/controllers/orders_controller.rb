@@ -1,3 +1,6 @@
+require 'sendgrid-ruby'
+include SendGrid
+
 class OrdersController < ApplicationController
 
   def show
@@ -11,7 +14,7 @@ class OrdersController < ApplicationController
 
     if order.valid?
       empty_cart!
-      send_order_email
+      send_order_email(order.id)
       redirect_to order, notice: 'Your Order has been placed.'
     else
       redirect_to cart_path, flash: { error: order.errors.full_messages.first }
@@ -58,19 +61,16 @@ class OrdersController < ApplicationController
     order
   end
 
-  require 'sendgrid-ruby'
-  include SendGrid
-
-  def send_order_email
+  def send_order_email(order_id)
     # using SendGrid's Ruby Library
     # https://github.com/sendgrid/sendgrid-ruby
 
     from = Email.new(email: ENV['VALID_EMAIL_ACCOUNT'])
     to = Email.new(email: 'test@example.com')
-    subject = 'Thank you for your order # '%order.id%''
+    subject = 'Thank you for your order # #{order_id}'
     content = Content.new(
       type: 'text/plain',
-      value: 'Your total order is $'%order.total_cents%'.'
+      value: 'Your total order is $ #{@order.total_cents}.'
     )
     mail = Mail.new(from, subject, to, content)
 
