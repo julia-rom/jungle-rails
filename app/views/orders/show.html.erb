@@ -18,8 +18,7 @@
         <% @line_items.each do |item| %>
           <%= render 'item', image: item.product.image, 
           name: item.product.name, description: item.product.description, 
-          unit_price: item.product.price_cents, quantity: item.product.quantity.to_i, 
-          price: item.quantity.to_i %> 
+          unit_price: item.product.price_cents, quantity: item.quantity.to_i %> 
         <% end %>
       </tbody>
       <tfoot>

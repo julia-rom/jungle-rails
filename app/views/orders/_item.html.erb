@@ -8,12 +8,12 @@
     <p><%= description %></p>
   </td>
     <td>
-    <%= unit_price %>
+    <%= unit_price / 100 %>
   </td>
   <td>
     <%= quantity %>
   </td>
   <td>
-    <%= unit_price * quantity %>
+    <%= unit_price * quantity / 100%>
   </td>
 </tr>
