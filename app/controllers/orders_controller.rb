@@ -64,6 +64,13 @@ class OrdersController < ApplicationController
   def send_order_email(order)
     # using SendGrid's Ruby Library
     # https://github.com/sendgrid/sendgrid-ruby
+    line_items = order.line_items
+    
+    product_names = ''
+
+    line_items.each do |item|
+      product_names += item.product.name + "\n"
+    end
 
     from = Email.new(email: ENV['VALID_EMAIL_ACCOUNT'])
     to = Email.new(email: 'juliaromanowski@gmail.com')
@@ -72,7 +79,10 @@ class OrdersController < ApplicationController
     content = Content.new(
       type: 'text/plain',
       value: "Hello there,
-      Your total order is $ #{order.total_cents / 100}"
+      Your total order is $ #{order.total_cents / 100}.
+      Your products:
+      #{product_names}
+      Thanks for shopping!"
     )
     mail = SendGrid::Mail.new(from, subject, to, content)
 
