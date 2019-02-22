@@ -1,3 +1,7 @@
+<% if enhanced_cart.empty? %>
+  <h1> Your cart is empty! <br></br>Please go back to the home page: <%= link_to 'Home', [:admin, :root] %></h1>
+<% else %>
+
 <section class="cart-show">
 
   <header class="page-header">
@@ -50,3 +54,5 @@
   </div>
 
 </section>
+
+<% end %>
