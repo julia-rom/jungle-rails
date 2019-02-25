@@ -26,7 +26,6 @@
       </div>
     </div>
     <h3>Reviews</h3>
-    <% puts @reviews %>
     <% @reviews.each do |review| %>
     <div class="col-sm-8">
       <dl class="dl-horizontal">
@@ -37,6 +36,15 @@
         </dl>
     </div>
     <% end %>
+    <h3>Add a review</h3>
+    <%= form_for @product do |f| %>
+      <%= f.fields_for :reviews do |review_form|%>
+        <%= review_form.label :rating %>
+        <%= review_form.select :rating, [1, 2, 3, 4, 5] %>
+        <%= review_form.label :description %>
+        <%= review_form.text_area :text %>
+        <%= submit_tag "Submit" %>
+      <% end %>
+    <% end %>
   </article>
-
 </section>
