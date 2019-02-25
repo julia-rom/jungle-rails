@@ -134,3 +134,20 @@ cat3.products.create!({
 
 
 puts "DONE!"
+
+
+## Reviews
+
+user1 = User.create(first_name:"Julia", last_name:"Nan", email: "juliar@gmail.com", password: "whatever")
+user2 = User.create(first_name:"Andrew", last_name:"Smith", email: "andrew@gmail.com", password: "whatever")
+
+
+puts "Re-creating Reviews ..."
+
+# products that will have reviews
+
+Review.create(product_id: 1, user_id: 1, description: 'Totally rad', rating: 5)
+Review.create(product_id: 1, user_id: 1, description: 'Arrived broken', rating: 1)
+Review.create(product_id: 2, user_id: 2, description: 'Greatest thing I ever bought!!!!', rating: 5)
+
+puts "Done creating reviews"
