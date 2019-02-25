@@ -108,4 +108,20 @@ RSpec.describe User, type: :model do
       expect(user).to_not be_valid
     end
   end
+
+  describe '.authenticate_with_credentials' do
+    # examples for this class method here
+    it 'is valid when a existing email is provided ' do
+      user = User.new(
+        first_name: 'Julia',
+        last_name: 'Rom',
+        email: 'julia@gmail.com',
+        password: 'testtest',
+        password_confirmation: 'testtest'
+      )
+      user.save
+      user2 = User.authenticate_with_credentials(user.email, user.password)
+      expect(user).to eq(user2)
+    end
+  end
 end
