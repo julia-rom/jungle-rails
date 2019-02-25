@@ -4,12 +4,13 @@ class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = Review.all
+    @reviews = Review.all.order(created_at: :desc)
   end
 
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    @review = Review.find params[:id]
   end
 
   # GET /reviews/new

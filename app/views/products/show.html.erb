@@ -25,7 +25,18 @@
         </dl>
       </div>
     </div>
-
+    <h3>Reviews</h3>
+    <% puts @reviews %>
+    <% @reviews.each do |review| %>
+    <div class="col-sm-8">
+      <dl class="dl-horizontal">
+        <dt>Rating</dt>
+        <dd><%= review.rating %></dd>
+        <dt>Description</dt>
+        <dd><%= review.description %></dd>
+        </dl>
+    </div>
+    <% end %>
   </article>
 
 </section>
