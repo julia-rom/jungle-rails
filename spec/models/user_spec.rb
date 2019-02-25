@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -121,6 +123,54 @@ RSpec.describe User, type: :model do
       )
       user.save
       user2 = User.authenticate_with_credentials(user.email, user.password)
+      expect(user).to eq(user2)
+    end
+    it 'is not valid when a non-existing email is provided ' do
+      user = User.new(
+        first_name: 'Julia',
+        last_name: 'Rom',
+        email: 'julia@gmail.com',
+        password: 'testtest',
+        password_confirmation: 'testtest'
+      )
+      user.save
+      user2 = User.authenticate_with_credentials('ju@gmail.com', user.password)
+      expect(user2).to be_nil
+    end
+    it 'is not valid when an incorrect password is provided ' do
+      user = User.new(
+        first_name: 'Julia',
+        last_name: 'Rom',
+        email: 'julia@gmail.com',
+        password: 'testtest',
+        password_confirmation: 'testtest'
+      )
+      user.save
+      user2 = User.authenticate_with_credentials(user.email, 'blahblah')
+      expect(user2).to be_nil
+    end
+    it 'is valid when extra spaces are added infront of email ' do
+      user = User.new(
+        first_name: 'Julia',
+        last_name: 'Rom',
+        email: 'julia@gmail.com',
+        password: 'testtest',
+        password_confirmation: 'testtest'
+      )
+      user.save
+      user2 = User.authenticate_with_credentials('  julia@gmail.com', user.password)
+      expect(user).to eq(user2)
+    end
+    it 'is valid when email is in capitals or mixed case ' do
+      user = User.new(
+        first_name: 'Julia',
+        last_name: 'Rom',
+        email: 'julia@gmail.com',
+        password: 'testtest',
+        password_confirmation: 'testtest'
+      )
+      user.save
+      user2 = User.authenticate_with_credentials('  julIA@Gmail.com', user.password)
       expect(user).to eq(user2)
     end
   end
